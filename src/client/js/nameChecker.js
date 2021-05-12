@@ -1,20 +1,13 @@
 
 function checkForName(inputText) {
-    //checks if the string inputted matches any of the names here
-    console.log("::: Running checkForName :::", inputText);
-    let names = [
-        "Picard",
-        "Janeway",
-        "Kirk",
-        "Archer",
-        "Georgiou"
-    ]
+    
+    const regex = /^((http|https):\/\/www\.[^\s-])/;
 
-    if(names.includes(inputText)) {
-        alert("Welcome, Captain!")
-    return 1;
+    if(!regex.test(inputText)){
+        alert("Please input a valid url");
+        return 0;
     }
-    return 0;
+    return 1;
 }
 
 export { checkForName }

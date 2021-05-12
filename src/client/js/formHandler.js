@@ -1,3 +1,5 @@
+
+
 function handleSubmit(event) {
 
 
@@ -11,21 +13,13 @@ function handleSubmit(event) {
     const result = document.getElementById('results');
     const formData = new FormData();
 
-    //regex to check wether the inputted string was a valid url or nit.
-    const regex = /^((http|https):\/\/www\.[^\s-])/;
-
-    if(!regex.test(formText)){
-        alert("Please input a valid url");
-        return 0;
-    }
-
+    console.log(js.checkForName(formText));
     //call to the local server to send the APIKEY and then fill the data for the meaningcloud API
     const API =fetch('http://localhost:3000/API');
     const API_KEY = async () => {
       let a = await API;
       a = await a.json();
 
-      console.log("here:",a.API); 
       formData.append("key", a.API);   
       formData.append("url", formText);
       formData.append("lang", "en"); 
@@ -54,16 +48,12 @@ function handleSubmit(event) {
       `Subjectivity: ${a.subjectivity}
        Agreement: ${a.agreement}
        Irony: ${a.irony}`;
+       return a;
   }
 
   sendResult();})
 }
 
-//simple function to test the jest tool.
-function sum(a,b){
-  return a + b;
-}
 
-export {sum}
 export { handleSubmit }
 
