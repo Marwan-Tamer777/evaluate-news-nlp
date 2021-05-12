@@ -5,11 +5,13 @@ function handleSubmit(event) {
     let requestOptions;
 
     event.preventDefault()
-    // check what text was put into the form field
+
+    // check what text was put into the form field and create a form data for  the API call
     let formText = document.getElementById('name').value
     const result = document.getElementById('results');
     const formData = new FormData();
 
+    //regex to check wether the inputted string was a valid url or nit.
     const regex = /^((http|https):\/\/www\.[^\s-])/;
 
     if(!regex.test(formText)){
@@ -17,6 +19,7 @@ function handleSubmit(event) {
         return 0;
     }
 
+    //call to the local server to send the APIKEY and then fill the data for the meaningcloud API
     const API =fetch('http://localhost:3000/API');
     const API_KEY = async () => {
       let a = await API;
@@ -34,6 +37,8 @@ function handleSubmit(event) {
         }; 
     }
     
+    //calls the api function to create and update the requestOptions var (data for the next api call)
+    //then calls the meaningCloud api and processes the results.
     API_KEY().then(()=>{ const response = fetch(endPoint, requestOptions)
    .then(response => ({
     status: response.status, 
@@ -54,6 +59,7 @@ function handleSubmit(event) {
   sendResult();})
 }
 
+//simple function to test the jest tool.
 function sum(a,b){
   return a + b;
 }

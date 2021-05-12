@@ -31,10 +31,12 @@ app.listen(3000, function () {
     console.log('Example app listening on port 3000!')
 })
 
+//sends a mock response to test the server
 app.get('/test', function (req, res) {
     res.send(mockAPIResponse)
 })
 
+//sends the APIKEY which is a hidden environment variable
 app.get('/API',function(req, res){
     res.send({ API: process.env.API_KEY })
 })

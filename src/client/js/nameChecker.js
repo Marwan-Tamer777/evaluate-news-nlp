@@ -1,5 +1,6 @@
 
 function checkForName(inputText) {
+    //checks if the string inputted matches any of the names here
     console.log("::: Running checkForName :::", inputText);
     let names = [
         "Picard",
