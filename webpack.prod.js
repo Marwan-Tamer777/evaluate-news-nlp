@@ -5,6 +5,8 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const WorkboxPlugin = require('workbox-webpack-plugin')
 require('dotenv').config()
 
+//this webpack config can be used by typing "npm run build-prod" which will a minimised verson 
+//of the app in the dist folder.
 module.exports = {
     entry: './src/client/index.js',
     mode: 'production',

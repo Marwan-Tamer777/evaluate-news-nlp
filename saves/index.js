@@ -4,7 +4,6 @@ const mockAPIResponse = require('./mockAPI.js')
 var bodyParser = require('body-parser')
 var cors = require('cors')
 const { url } = require('inspector')
-const fetch = require("node-fetch");
 require('dotenv').config()
 
 const app = express()
@@ -17,7 +16,7 @@ app.use(bodyParser.urlencoded({
   extended: true
 }))
 
-const endPoint = 'https://api.meaningcloud.com/sentiment-2.1';
+
 console.log(__dirname)
 
 app.get('/', function (req, res) {
@@ -42,18 +41,3 @@ app.get('/API',function(req, res){
     res.send({ API: process.env.API_KEY })
 })
 
-//makes a call to the meaningcloud API
-app.post('/callAPI', callAPI)
-
-async function callAPI(req,res){
-    console.log(req.body, req.body.body)
-
-
-    const response = await fetch(endPoint, req.body)
-   .then(response => ({
-    status: response.status, 
-    body: response.json()
-  }))
-  .then(async ({ status, body }) => {console.log(await body); res.send(await body); })
-  .catch(error => console.log('error', error))
-}

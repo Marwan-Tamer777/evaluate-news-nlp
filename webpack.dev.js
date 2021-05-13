@@ -4,6 +4,7 @@ const HtmlWebPackPlugin = require("html-webpack-plugin")
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 require('dotenv').config()
 
+//this dev config can be used by typing "npm run build-dev" which will open a test server for the webapp
 module.exports = {
     entry: './src/client/index.js',
     mode: 'development',
