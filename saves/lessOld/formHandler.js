@@ -10,17 +10,42 @@ function handleSubmit(event) {
     // check what text was put into the form field and create a form data for  the API call
     let formText = document.getElementById('name').value
     const result = document.getElementById('results');
+    const formData = new FormData();
 
     console.log(js.checkForName(formText));
+    
 
-    async function API_KEY () {
+    const API_KEY = async () => {
+      //call to the local server to send the APIKEY and then fill the data for the meaningcloud API
+      const API = await fetch('http://localhost:3000/API');
+      let a = await API;
+      a = await a.json();
+
+      formData.append("key", a.API);   
+      formData.append("url", formText);
+      formData.append("lang", "en"); 
+
+      requestOptions = {
+        method: 'POST',
+        body: formData,
+        redirect: 'follow'
+        };
+        console.log(formData.get("key"),formData.get("url"), formData.get("lang"));
+      }
+        
+      
+    
+
+    API_KEY().then( async()=>{
+
+      console.log(requestOptions);
       let results =  await fetch('http://localhost:3000/callAPI',{ 
         method: 'POST',
         credentials: 'same-origin',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({formText})
+        body: JSON.stringify(requestOptions)
       })
 
       let x = await results.json(); 
@@ -41,9 +66,7 @@ function handleSubmit(event) {
        [6]: ${x.sentence_list[5].text}
        [7]: ${x.sentence_list[6].text}`;
        return x;
-    }
-
-    API_KEY();
+    });
    /* 
     //calls the api function to create and update the requestOptions var (data for the next api call)
     //then calls the meaningCloud api and processes the results.

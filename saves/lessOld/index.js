@@ -4,10 +4,12 @@ const mockAPIResponse = require('./mockAPI.js')
 var bodyParser = require('body-parser')
 var cors = require('cors')
 const { url } = require('inspector')
-const fetch = require("node-fetch");
+var fetch = require("node-fetch");
 require('dotenv').config()
 var FormData = require('form-data');
-var fs = require('fs');
+require('fs');
+const axios = require('axios')
+
 
 const app = express()
 app.use(express.static('dist'))
@@ -50,25 +52,22 @@ app.post('/callAPI', callAPI)
 async function callAPI(req,res){
     console.log(req.body)
 
-    const formData = new FormData;
-    console.log(process.env.API_KEY, req.body);
-    formData.append("key", process.env.API_KEY);   
-    formData.append("url", req.body.formText);
-    formData.append("lang", "en");
+    /*   axios
+  .post(endPoint, req.body)
+  .then(res => {
+    console.log(`statusCode: ${res.statusCode}`)
+    console.log(res)
+  })
+  .catch(error => {
+    console.error(error)
+  })*/
+  
 
-
-    const requestOptions = {
-  method: 'POST',
-  body: formData,
-  redirect: 'follow'
-};
-    console.log(requestOptions);
-    
-    const response = await fetch(endPoint, requestOptions)
+    const response = await fetch(endPoint, req.body)
    .then(response => ({
     status: response.status, 
     body: response.json()
   }))
-  .then(async ({ status, body }) => {console.log(await body); res.send(await body); })
+  .then(async ({ status, body }) => {console.log(await status,await body); res.send(await body); })
   .catch(error => console.log('error', error))
 }
